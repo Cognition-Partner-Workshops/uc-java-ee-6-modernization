@@ -1,0 +1,44 @@
+# Normalisation rules for parity transcripts. Applied in order to every visible text line, form-input
+# value, request description and JSON string. See NORMALIZATION.md for why each rule exists.
+# Editing these rules changes what "parity" means: every change needs a reason in NORMALIZATION.md
+# and a re-record from the Liberty baseline.
+
+dropTablesWithHeader:
+  # Market-summary "top gainers / top losers" tables on the home page. Their symbols and prices
+  # depend on every trade anyone has made since the DB was built, so they are not per-request behaviour.
+  - [symbol, price, change]
+
+textRules:
+  - id: N1-timestamp
+    description: java.util.Date.toString() timestamps (clock line, order and account dates)
+    pattern: '\b(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun) (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{2} \d{2}:\d{2}:\d{2} [A-Z]{2,5} \d{4}\b'
+    replace: '<TIMESTAMP>'
+  - id: N2-session-id
+    description: servlet session ids in URLs or text
+    pattern: '(?i)jsessionid=[^;&?"\s]+'
+    replace: 'jsessionid=<SESSION_ID>'
+  - id: N3-new-user-id
+    description: per-run user ids the harness registers (ru:p<seed>-<runToken>-<n>)
+    pattern: 'ru:p\d+-[0-9a-f]+-\d+'
+    replace: 'ru:<NEW_USER>'
+  - id: N4-order-id-in-text
+    description: order ids in confirmation sentences
+    pattern: '\bOrder \d+\b'
+    replace: 'Order <ID>'
+  - id: N4b-iso-date
+    description: ISO dates (market summary date)
+    pattern: '\b\d{4}-\d{2}-\d{2}\b'
+    replace: '<DATE>'
+  - id: N5-decimal
+    description: signed decimal amounts (quote prices, volumes, balances, gains, quantities). Seeded quote prices and every trade's price movement are random, so amounts are masked here and the business arithmetic is checked in each scenario's "checks" instead.
+    pattern: '(?<![\w.])[+-]?\d+\.\d+'
+    replace: '<DEC>'
+  - id: N6-database-id
+    description: account, order and holding ids (keys from the KEYGENEJB block allocator, 4+ digits once the DB is seeded)
+    pattern: '(?<![\w:.<-])\d{4,}(?![\w.-])'
+    replace: '<ID>'
+  - id: N7-volatile-account-integers
+    description: on steps marked volatileAccount (the seeded uid:0 account, whose holdings, balances and login counts are randomised by buildDB and grow every run), mask every remaining integer and fold <ID> into <N> (whether a uid:0 count reaches 4 digits depends on DB history)
+    scope: volatileAccount
+    pattern: '(?<![\w:<])\d+(?![\w>])|<ID>'
+    replace: '<N>'

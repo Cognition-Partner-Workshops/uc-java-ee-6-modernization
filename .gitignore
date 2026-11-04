@@ -6,3 +6,7 @@
 .DS_Store
 /build/
 /.gradle/
+.venv/
+work/
+__pycache__/
+*.pyc

@@ -1,3 +1,23 @@
+# DayTrader 3: WebSphere → Spring Boot modernization "before" estate
+
+This fork is prepared as the starting point for a WebSphere (Liberty / synthetic tWAS on AIX) → Spring Boot on AWS ECS Fargate migration demo.
+
+```bash
+make up && make build && make run && make parity TARGET=http://localhost:9083/daytrader
+```
+
+- [AGENTS.md](AGENTS.md): commands and rules for agents
+- [docs/BASELINE.md](docs/BASELINE.md): how the legacy app builds and runs today
+- [docs/WEBSPHERE_INVENTORY.md](docs/WEBSPHERE_INVENTORY.md): generated WebSphere dependency inventory
+- [docs/TARGET_STATE.md](docs/TARGET_STATE.md): target architecture
+- [docs/LAB.md](docs/LAB.md): live-demo prompts
+- [parity/](parity/NORMALIZATION.md): behavioural parity harness
+- [legacy-ops/](legacy-ops/README.md): **synthetic** traditional WebSphere on AIX operations artefacts
+
+The original README follows.
+
+---
+
 # sample.daytrader3 [![Build Status](https://travis-ci.org/WASdev/sample.daytrader3.svg?branch=master)](https://travis-ci.org/WASdev/sample.daytrader3)
 
 # Java EE6: DayTrader3 Sample
