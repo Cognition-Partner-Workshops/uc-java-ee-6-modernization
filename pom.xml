@@ -35,8 +35,10 @@
 		<module>daytrader3-ee6-ejb</module>
 		<module>daytrader3-ee6-rest</module>
 		<module>daytrader3-ee6-web</module>
-		<module>daytrader3-ee6</module>
+        <!-- wlpcfg must build before the EAR: its clean phase deletes apps/* and the Derby lib
+             that the EAR module copies in, so `mvn clean install` used to leave no EAR behind. -->
         <module>daytrader3-ee6-wlpcfg</module>
+		<module>daytrader3-ee6</module>
     </modules>
 
 </project>

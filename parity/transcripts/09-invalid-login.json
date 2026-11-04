@@ -1,0 +1,17 @@
+{
+  "checks": {},
+  "description": "Wrong password for uid:0",
+  "scenario": "09-invalid-login",
+  "steps": [
+    {
+      "containsPhrases": {
+        "An Error has occured during DayTrader processing": true,
+        "DayTrader Error": true
+      },
+      "contentType": "text/html",
+      "request": "POST /app {\"action\": \"login\", \"passwd\": \"wrong-password\", \"uid\": \"uid:0\"}",
+      "status": 500,
+      "step": "login-bad-password"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "checks": {},
+  "description": "GET /rest/addresses/search/Entry1",
+  "scenario": "12-rest-search",
+  "steps": [
+    {
+      "contentType": "application/json",
+      "json": {
+        "addresses": [
+          {
+            "city": "City",
+            "country": "Country",
+            "entryName": "Entry1",
+            "state": "State",
+            "streetAddress": "Address",
+            "zipCode": "<ID>"
+          }
+        ]
+      },
+      "request": "GET /rest/addresses/search/Entry1 {}",
+      "status": 200,
+      "step": "search"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "checks": {},
+  "description": "GET /rest/addresses/{entryName}, existing and unknown",
+  "scenario": "13-rest-entry",
+  "steps": [
+    {
+      "contentType": "",
+      "request": "GET /rest/addresses/Entry2 {}",
+      "status": 415,
+      "step": "entry-existing"
+    },
+    {
+      "contentType": "",
+      "request": "GET /rest/addresses/Nope {}",
+      "status": 404,
+      "step": "entry-unknown"
+    }
+  ]
+}

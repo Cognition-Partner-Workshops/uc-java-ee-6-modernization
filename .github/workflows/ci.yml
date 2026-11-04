@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  build-test-parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      LIBERTY_IMAGE: icr.io/appcafe/websphere-liberty:full-java8-ibmjava-ubi
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: JDK 8 (POMs target Java 7)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+          cache: maven
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: make up (pull Liberty, install parity deps)
+        run: make up
+
+      - name: make build (Maven build + JUnit 5 unit tests)
+        run: make build JDK8_HOME="$JAVA_HOME"
+
+      - name: Inventory is up to date
+        run: python3 tools/ws_inventory.py --check
+
+      - name: make run (Liberty container + Derby seed)
+        run: make run
+
+      - name: make parity against the running Liberty app
+        run: make parity TARGET=http://localhost:9083/daytrader
+
+      - name: Parity report
+        if: always()
+        run: |
+          if [ -f work/parity/report.md ]; then cat work/parity/report.md >> "$GITHUB_STEP_SUMMARY"; fi
+
+      - name: Liberty logs on failure
+        if: failure()
+        run: make logs || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: parity-and-test-reports
+          path: |
+            work/parity/
+            daytrader3-ee6-ejb/target/surefire-reports/
+          if-no-files-found: ignore

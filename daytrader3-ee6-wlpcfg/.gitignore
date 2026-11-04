@@ -13,3 +13,6 @@
 /servers/daytrader7Sample/tranlog
 /servers/daytrader7Sample/derby.log
 /shared/*
+/servers/daytrader3_Sample/apps/*.ear
+/servers/daytrader3_Sample/logs
+/servers/daytrader3_Sample/workarea

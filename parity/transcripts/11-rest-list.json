@@ -1,0 +1,57 @@
+{
+  "checks": {},
+  "description": "GET /rest/addresses",
+  "scenario": "11-rest-list",
+  "steps": [
+    {
+      "contentType": "application/json",
+      "json": {
+        "addresses": [
+          {
+            "city": "City",
+            "country": "Country",
+            "entryName": "Entry1",
+            "state": "State",
+            "streetAddress": "Address",
+            "zipCode": "<ID>"
+          },
+          {
+            "city": "City",
+            "country": "Country",
+            "entryName": "Entry2",
+            "state": "State",
+            "streetAddress": "Address",
+            "zipCode": "<ID>"
+          },
+          {
+            "city": "City",
+            "country": "Country",
+            "entryName": "Entry3",
+            "state": "State",
+            "streetAddress": "Address",
+            "zipCode": "<ID>"
+          },
+          {
+            "city": "City",
+            "country": "Country",
+            "entryName": "Entry4",
+            "state": "State",
+            "streetAddress": "Address",
+            "zipCode": "<ID>"
+          },
+          {
+            "city": "City",
+            "country": "Country",
+            "entryName": "Entry5",
+            "state": "State",
+            "streetAddress": "Address",
+            "zipCode": "<ID>"
+          }
+        ]
+      },
+      "request": "GET /rest/addresses {}",
+      "status": 200,
+      "step": "list"
+    }
+  ]
+}
