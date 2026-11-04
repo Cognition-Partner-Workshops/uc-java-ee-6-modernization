@@ -41,7 +41,7 @@ Each scenario also has **`checks`**: values the harness works out from the raw, 
 | N4b | ISO dates `2026-11-04` | `<DATE>` | Market summary date. |
 | N5 | Signed decimals, e.g. `145.06`, `-3.2`, `+53.00` | `<DEC>` | `buildDB` gives every quote a random price (`TradeConfig.rndPrice`), and each trade moves it by a random ±20% (`getRandomPriceChangeFactor`). The RNG is seeded from the server clock and can't be pinned over HTTP. So amounts are masked in `text` and checked in `checks` instead. |
 | N6 | Integers with 4+ digits that are not part of a word, symbol, decimal or dashed number | `<ID>` | Account, order and holding ids (≥ 1000 once seeded). |
-| N7 | Every remaining integer, **only on steps marked `volatileAccount`** | `<N>` | The seeded `uid:0` account gets random holdings and balances from `buildDB`, and its login count goes up on every run. Only the login, home and quotes steps for `uid:0` use this scope. |
+| N7 | Every remaining integer, and any `<ID>` from N6, **only on steps marked `volatileAccount`** | `<N>` | The seeded `uid:0` account gets random holdings and balances from `buildDB`, and its login count goes up on every run. N6 is folded in too, because whether one of those counts reaches 4 digits depends on how long the DB has been used. Only the login, home and quotes steps for `uid:0` use this scope. |
 
 ## Fixed seed
 
