@@ -1,0 +1,76 @@
+{{/* tradehome.jsp. The legacy page declares the "results" bean but never prints it, so .Results is not rendered either. */}}
+{{define "market_home"}}{{template "pageStart" .Page}}
+<TABLE width="636">
+	<TBODY>
+		<TR>
+			<TD valign="top" width="377">
+			<TABLE width="384">
+				<TBODY>
+					<TR>
+						<TD colspan="3"><B>Welcome &nbsp;{{.Account.ProfileID}},</B></TD>
+					</TR>
+					<TR>
+						<TD width="133"></TD>
+						<TD width="22"></TD>
+						<TD width="212"></TD>
+					</TR>
+					<TR>
+						<TD colspan="3" align="left" bgcolor="#cccccc"><B> User Statistics
+						</B></TD>
+					</TR>
+					<TR>
+						<TD align="right" valign="top" width="133"><A
+							href="docs/glossary.html">account ID:<BR>
+						</A><A href="docs/glossary.html">account created:</A><BR>
+						<A href="docs/glossary.html">total logins:</A><BR>
+						<A href="docs/glossary.html">session created:</A><BR>
+						</TD>
+						<TD width="22"></TD>
+						<TD align="left" width="212">{{.Account.AccountID}}<BR>
+						{{date .Account.CreationDate}}<BR>
+						{{.Account.LoginCount}}<BR>
+						{{date .Session.CreationDate}}<BR>
+						</TD>
+					</TR>
+					<TR>
+						<TD width="133"></TD>
+						<TD width="22"></TD>
+						<TD width="212"></TD>
+					</TR>
+					<TR>
+						<TD colspan="3" bgcolor="#cccccc"><B>Account Summary </B></TD>
+					</TR>
+					<TR>
+						<TD align="right" valign="top" width="133"><A
+							href="docs/glossary.html"> cash balance:</A><BR>
+						<A href="docs/glossary.html">number of holdings:</A><BR>
+						<A href="docs/glossary.html">total of holdings:<BR>
+						sum of cash/holdings<BR>
+						opening balance:<BR>
+						</A>
+						<HR>
+						</TD>
+						<TD width="22"></TD>
+						<TD align="left" valign="top" width="212">$ {{money .Account.Balance}}<BR>
+						{{.Totals.HoldingCount}}<BR>
+						$ {{money .Totals.HoldingsTotal}}<BR>
+						$ {{money .Totals.SumOfCashHoldings}}<BR>
+						$ {{money .Account.OpenBalance}}<BR>
+						<HR>
+						</TD>
+					</TR>
+					<TR>
+						<TD valign="top" align="right"><A href="docs/glossary.html">current
+						gain/(loss):</A></TD>
+						<TD></TD>
+						<TD valign="top">$ <B>{{gainHTML .Totals.Gain}} {{gainPercentHTML .Totals.GainPercent}}</B></TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+			</TD>
+			<TD align="center" valign="top" bgcolor="#ffffff" width="236">{{template "market_summary" .Market}} <BR>
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+{{template "pageEnd" .Page}}{{end}}
