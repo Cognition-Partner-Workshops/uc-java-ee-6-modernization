@@ -19,4 +19,6 @@ func init() {
 	web.RegisterRestRoute("/addresses/{entryName}", func(app *web.App) http.Handler { return entryHandler(app, book) })
 	web.RegisterRestRoute("/addresses/{entryName}/{$}", func(app *web.App) http.Handler { return entryHandler(app, book) })
 	web.RegisterRestRoute("/addresses/{unmatched...}", func(*web.App) http.Handler { return http.HandlerFunc(notFound) })
+	// Anything else under the REST root: the legacy JAX-RS servlet answers an empty 404.
+	web.RegisterRestRoute("/{unmatched...}", func(*web.App) http.Handler { return http.HandlerFunc(notFound) })
 }
