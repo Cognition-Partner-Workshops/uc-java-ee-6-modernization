@@ -57,3 +57,32 @@ logs:
 
 down:
 	-docker rm -f $(CONTAINER)
+
+# --- Go + PostgreSQL target (daytrader-go/) -----------------------------------------------------
+GO          ?= $(firstword $(shell command -v go) /usr/local/go/bin/go)
+GO_PORT     ?= 8080
+GO_DB_URL   ?= postgres://daytrader:daytrader@localhost:55432/daytrader?sslmode=disable
+
+.PHONY: go-db go-build go-test go-seed go-run go-down
+
+go-db: ## Start PostgreSQL for the Go target (port 55432)
+	docker compose -f daytrader-go/compose.yaml up -d --wait
+
+go-build: ## go vet + build daytrader-go/bin/daytrader
+	cd daytrader-go && $(GO) vet ./... && CGO_ENABLED=0 $(GO) build -o bin/daytrader ./cmd/daytrader
+
+go-test: ## go vet + go test
+	cd daytrader-go && $(GO) vet ./... && $(GO) test ./...
+
+go-seed: go-build go-db ## buildDBTables + buildDB on PostgreSQL
+	DATABASE_URL='$(GO_DB_URL)' daytrader-go/bin/daytrader seed
+
+go-run: go-seed ## Seed, then serve the Go target on :8080 in the background (log: work/daytrader-go.log)
+	@mkdir -p work
+	@-pkill -x daytrader 2>/dev/null; sleep 1
+	DATABASE_URL='$(GO_DB_URL)' LISTEN_ADDR=:$(GO_PORT) nohup daytrader-go/bin/daytrader serve > work/daytrader-go.log 2>&1 &
+	@sleep 2 && curl -fsS http://localhost:$(GO_PORT)/daytrader/health && echo
+
+go-down: ## Stop the Go target and its PostgreSQL
+	-pkill -x daytrader
+	docker compose -f daytrader-go/compose.yaml down -v
