@@ -1,0 +1,56 @@
+{{/* quote.jsp + displayQuote.jsp. The legacy page never prints the "results" attribute. */}}
+{{define "market_quotes"}}{{template "pageStart" .Page}}
+<TABLE width="650">
+	<TBODY>
+		<TR>
+			<TD>
+			<TABLE width="100%">
+				<TBODY>
+					<TR>
+						<TD></TD>
+					</TR>
+					<TR>
+						<TD bgcolor="#cccccc"> <B>Quotes</B></TD>
+					</TR>
+					<TR>
+						<TD align="center">
+						<TABLE border="1" style="font-size: smaller">
+							<TBODY>
+								<TR align="center">
+									<TD><A href="docs/glossary.html">symbol</A></TD>
+									<TD><A href="docs/glossary.html">company</A></TD>
+									<TD><A href="docs/glossary.html">volume</A></TD>
+									<TD><A href="docs/glossary.html">price range</A></TD>
+									<TD><A href="docs/glossary.html">open price</A></TD>
+									<TD><A href="docs/glossary.html">current price</A></TD>
+									<TD><A href="docs/glossary.html">gain/(loss)</A></TD>
+									<TD><A href="docs/glossary.html">trade</A></TD>
+								</TR>
+								{{range .Quotes}}
+								<TR align="center" bgcolor="#fafcb6">
+									<TD>{{.SymbolLink}}</TD>
+									<TD>{{.CompanyName}}</TD>
+									<TD>{{.Volume}}</TD>
+									<TD>{{.Low}} - {{.High}}</TD>
+									<TD nowrap>{{.Open}}</TD>
+									<TD>$ {{.Price}}</TD>
+									<TD>{{.Gain}}
+									{{.GainPercent}}</TD>
+									<TD>
+									<FORM action=""><INPUT type="submit" name="action" value="buy"><INPUT
+										type="hidden" name="symbol" value="{{.Symbol}}"><INPUT
+										size="4" type="text" name="quantity" value="100"></FORM>
+									</TD>
+								</TR>
+								{{end}}
+							</TBODY>
+						</TABLE>
+						</TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+{{template "pageEnd" .Page}}{{end}}
