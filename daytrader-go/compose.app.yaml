@@ -1,0 +1,19 @@
+# Override that runs the Go target as a container next to PostgreSQL.
+#   docker compose -f daytrader-go/compose.yaml -f daytrader-go/compose.app.yaml up -d --build --wait
+#   curl 'http://localhost:8080/daytrader/config?action=buildDBTables'
+#   curl 'http://localhost:8080/daytrader/config?action=buildDB'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: daytrader-go:local
+    environment:
+      DATABASE_URL: postgres://daytrader:daytrader@postgres:5432/daytrader?sslmode=disable
+      LISTEN_ADDR: ":8080"
+      ORDER_PROCESSING_MODE: sync
+    ports:
+      - "${DAYTRADER_APP_PORT:-8080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
