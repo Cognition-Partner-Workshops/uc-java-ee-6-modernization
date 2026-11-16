@@ -1,0 +1,166 @@
+{{/* Ported from account.jsp. Data: account.accountPageData. */}}
+{{define "account_account"}}{{template "pageStart" .Page}}<TABLE width="620">
+	<TBODY>
+		<TR>
+			<TD valign="top" width="643">
+			<TABLE width="100%">
+				<TBODY>
+					<TR>
+						<TD colspan="8"><FONT color="#ff0000">{{.Results}}</FONT></TD>
+					</TR>
+					<TR>
+						<TD colspan="8" align="left" bgcolor="#cccccc"><B>Account
+						Information</B></TD>
+					</TR>
+					<TR>
+						<TD align="right" valign="bottom"><A href="docs/glossary.html">account
+						created:</A></TD>
+						<TD align="left" valign="bottom" colspan="2">{{date .Account.CreationDate}}</TD>
+						<TD align="right" valign="bottom"><A href="docs/glossary.html">last
+						login: </A></TD>
+						<TD align="left" valign="bottom" colspan="3">{{date .Account.LastLogin}}</TD>
+						<TD align="left" valign="bottom"></TD>
+					</TR>
+					<TR>
+						<TD align="right" valign="bottom"><A href="docs/glossary.html">account
+						ID</A></TD>
+						<TD valign="bottom">{{.Account.AccountID}}</TD>
+						<TD valign="bottom"></TD>
+						<TD align="right" valign="bottom"><A href="docs/glossary.html">total
+						logins: </A></TD>
+						<TD valign="bottom">{{.Account.LoginCount}}</TD>
+						<TD valign="bottom"></TD>
+						<TD align="right" valign="bottom"><A href="docs/glossary.html">cash
+						balance: </A></TD>
+						<TD valign="bottom">{{money .Account.Balance}}</TD>
+					</TR>
+					<TR>
+						<TD align="right" valign="bottom"><A href="docs/glossary.html">user
+						ID:</A></TD>
+						<TD valign="bottom">{{.Account.ProfileID}}</TD>
+						<TD valign="bottom"></TD>
+						<TD align="right" valign="bottom"><A href="docs/glossary.html">total
+						logouts: </A></TD>
+						<TD valign="bottom">{{.Account.LogoutCount}}</TD>
+						<TD valign="bottom"></TD>
+						<TD valign="bottom" align="right"><A href="docs/glossary.html">opening
+						balance: </A></TD>
+						<TD valign="bottom">{{money .Account.OpenBalance}}</TD>
+					</TR>
+					<TR>
+						<TD colspan="8"></TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+			<TABLE width="100%">
+				<TBODY>
+
+					<TR>
+						<TD colspan="5" bgcolor="#cccccc"><B>Total Orders: </B>{{.TotalOrders}}</TD>
+						<TD bgcolor="#cccccc" align="right"><B><A
+							href="app?action=account&amp;showAllOrders=true">show all orders</A></B></TD>
+					</TR>
+					<TR align="center">
+						<TD colspan="6">
+						<TABLE border="1" style="font-size: smaller">
+							<CAPTION align="bottom"><B>Recent Orders</B></CAPTION>
+							<TBODY>
+								<TR align="center">
+									<TD><A href="docs/glossary.html">order ID</A></TD>
+									<TD><A href="docs/glossary.html">order Status</A></TD>
+									<TD><A href="docs/glossary.html">creation date</A></TD>
+									<TD><A href="docs/glossary.html">completion date</A></TD>
+									<TD><A href="docs/glossary.html">txn fee</A></TD>
+									<TD><A href="docs/glossary.html">type</A></TD>
+									<TD><A href="docs/glossary.html">symbol</A></TD>
+									<TD><A href="docs/glossary.html">quantity</A></TD>
+									<TD><A href="docs/glossary.html">price</A></TD>
+									<TD><A href="docs/glossary.html">total</A></TD>
+								</TR>
+								{{range .Orders}}
+								<TR bgcolor="#fafcb6" align="center">
+									<TD>{{.Order.OrderID}}</TD>
+									<TD>{{.Order.OrderStatus}}</TD>
+									<TD>{{date .Order.OpenDate}}</TD>
+									<TD>{{formatNullableTS .Order.CompletionDate}}</TD>
+									<TD>{{money .Order.OrderFee}}</TD>
+									<TD>{{.Order.OrderType}}</TD>
+									<TD>{{quoteLink .Order.Symbol}}</TD>
+									<TD>{{double .Order.Quantity}}</TD>
+									<TD>{{money .Order.Price}}</TD>
+									<TD>{{.Total}}</TD>
+								</TR>
+								{{end}}
+							</TBODY>
+						</TABLE>
+						</TD>
+					</TR>
+					<TR>
+						<TD colspan="6"></TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+            <FORM>
+			<TABLE width="100%">
+				<TBODY>
+					<TR>
+						<TD colspan="6" bgcolor="#cccccc"><B>Account Profile</B></TD>
+					</TR>
+					<TR>
+						<TD align="right" valign="top" width="113"><A
+							href="docs/glossary.html">user ID:</A></TD>
+						<TD align="left" valign="top" colspan="2" width="228"><INPUT
+							size="30" type="text" maxlength="30" readonly name="userID"
+							value="{{.Profile.UserID}}"></TD>
+						<TD align="right" valign="top" width="73" colspan="2"><A
+							href="docs/glossary.html">full name: </A></TD>
+						<TD align="left" valign="top"><INPUT size="30" type="text"
+							maxlength="30" name="fullname"
+							value="{{.Profile.FullName}}"></TD>
+					</TR>
+					<TR>
+						<TD align="right" width="113"><A href="docs/glossary.html">password:
+						</A></TD>
+						<TD colspan="2" width="228"><INPUT size="30" type="password"
+							maxlength="30" name="password"
+							value="{{.Profile.Password}}"></TD>
+						<TD align="right" width="73" colspan="2"><A
+							href="docs/glossary.html">address: </A></TD>
+						<TD><INPUT size="30" type="text" maxlength="30" name="address"
+							value="{{.Profile.Address}}"></TD>
+					</TR>
+					<TR>
+						<TD align="right" width="113"><A href="docs/glossary.html">confirm
+						password: </A><BR>
+						</TD>
+						<TD colspan="2" align="left" width="228"><INPUT size="30"
+							type="password" maxlength="30" name="cpassword"
+							value="{{.Profile.Password}}"></TD>
+						<TD align="right" width="73" colspan="2"><A
+							href="docs/glossary.html">credit card: </A></TD>
+						<TD align="left"><INPUT size="30" type="text" maxlength="30"
+							name="creditcard"
+							value="{{.Profile.CreditCard}}" readonly></TD>
+					</TR>
+					<TR>
+						<TD align="right" width="113"><A href="docs/glossary.html">email
+						address: </A></TD>
+						<TD colspan="2" align="left" width="228"><INPUT size="30"
+							type="text" maxlength="30" name="email"
+							value="{{.Profile.Email}}"></TD>
+						<TD align="right" width="73" colspan="2"></TD>
+						<TD align="center"><INPUT type="submit" name="action"
+							value="update_profile"></TD>
+					</TR>
+					<TR>
+						<TD width="113"></TD>
+						<TD colspan="5"></TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+            </FORM>
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+{{template "pageEnd" .Page}}{{end}}
