@@ -1,0 +1,132 @@
+{{/* Ported from register.jsp. Data: account.registerPageData. */}}
+{{define "account_register"}}<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>DayTrader Registration</TITLE>
+</HEAD>
+<BODY bgcolor="#ffffff" link="#000099">
+<TABLE style="font-size: smaller">
+	<TBODY>
+		<TR>
+			<TD bgcolor="#c93333" align="left" width="640" height="10"><B><FONT
+				color="#ffffff">DayTrader Register</FONT></B></TD>
+			<TD align="center" bgcolor="#000000" width="100" height="10"><FONT
+				color="#ffffff"><B>DayTrader</B></FONT></TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<TABLE width="740" height="30">
+	<TBODY>
+		<TR>
+			<TD align="center"></TD>
+			<TD><FONT color="#ff3333">{{.Results}}</FONT></TD>
+			<TD></TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<TABLE width="665">
+	<TBODY>
+		<TR>
+			<TD width="2%" bgcolor="#e7e4e7"></TD>
+			<TD width="98%" colspan="8"><B>Register</B>
+			<HR>
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<FORM action="app">
+<TABLE width="665">
+	<TBODY align="right">
+		<TR>
+			<TD width="2%" bgcolor="#e7e4e7" rowspan="11"></TD>
+			<TD width="33%" colspan="4" align="right"><FONT COLOR="#FF0000">*</FONT><B>Full
+			name:</B></TD>
+			<TD width="20%" colspan="2" align="right"><INPUT size="40"
+				type="text" name="Full Name"
+				value="{{.FullName}}"></TD>
+			<TD width="2%" bgcolor="#e7e4e7" rowspan="11"></TD>
+		</TR>
+		<TR>
+			<TD colspan="4" align="right"><FONT COLOR="#FF0000">*</FONT><B>Address:</B></TD>
+			<TD colspan="2" align="right"><INPUT size="40" type="text"
+				name="snail mail" value="{{.Address}}"></TD>
+		</TR>
+		<TR>
+			<TD colspan="4" align="right"><FONT COLOR="#FF0000">*</FONT><B>E-Mail
+			address:</B></TD>
+			<TD colspan="2" align="right"><INPUT size="40" type="text"
+				name="email" value="{{.Email}}"></TD>
+		</TR>
+		<TR>
+			<TD colspan="4">&nbsp;</TD>
+			<TD colspan="2" align="right">&nbsp;</TD>
+		</TR>
+		<TR>
+			<TD colspan="4" align="right"><FONT COLOR="#FF0000">*</FONT><B>User
+			ID:</B></TD>
+			<TD colspan="2" align="right"><INPUT size="40" type="text"
+				name="user id" value="{{.UserID}}"></TD>
+		</TR>
+		<TR>
+			<TD colspan="4" align="right"><B><FONT COLOR="#FF0000">*</FONT>Password:</B></TD>
+			<TD colspan="2" align="right"><INPUT size="40" type="password"
+				name="passwd"></TD>
+		</TR>
+		<TR>
+			<TD colspan="4" align="right"><B><FONT COLOR="#FF0000">*</FONT>Confirm
+			password:</B></TD>
+			<TD colspan="2" align="right"><INPUT size="40" type="password"
+				name="confirm passwd"></TD>
+		</TR>
+		<TR>
+			<TD colspan="4">&nbsp;</TD>
+			<TD colspan="2" align="right">&nbsp;</TD>
+		</TR>
+		<TR>
+			<TD colspan="4" align="right"><FONT COLOR="#FF0000">*</FONT><B>Opening
+			account balance:</B></TD>
+			<TD colspan="2" align="right">$<B> </B><INPUT size="20" type="text"
+				name="money" value='{{.Money}}'></TD>
+		</TR>
+		<TR>
+			<TD colspan="4" align="right"><B><FONT COLOR="#FF0000">*</FONT>Credit
+			card number:</B></TD>
+			<TD colspan="2" align="right">&nbsp;&nbsp;<INPUT size="40"
+				type="text" name="Credit Card Number"
+				value="{{.CreditCard}}" readonly></TD>
+		</TR>
+		<TR>
+			<TD align="center"></TD>
+			<TD align="center"></TD>
+			<TD align="center"></TD>
+			<TD align="center"></TD>
+			<TD align="center"></TD>
+			<TD align="center"><INPUT type="submit" value="Submit Registration"></TD>
+		</TR>
+		<TR>
+			<TD align="right" colspan="6"></TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<INPUT type="hidden" name="action" value="register"></FORM>
+<TABLE height="54" style="font-size: smaller">
+	<TBODY>
+		<TR>
+			<TD colspan="2">
+			<HR>
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan="2"></TD>
+		</TR>
+		<TR>
+			<TD bgcolor="#c93333" align="left" width="640" height="10"><B><FONT
+				color="#ffffff">DayTrader Register</FONT></B></TD>
+			<TD align="center" bgcolor="#000000" width="100" height="10"><FONT
+				color="#ffffff"><B>DayTrader</B></FONT></TD>
+		</TR>
+	</TBODY>
+</TABLE>
+</BODY>
+</HTML>
+{{end}}
