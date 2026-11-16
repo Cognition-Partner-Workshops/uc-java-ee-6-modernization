@@ -99,3 +99,16 @@ func home(app *web.App, w http.ResponseWriter, r *http.Request, session *web.Ses
   `session.CreationDate`; logout calls `app.Sessions.Invalidate(w, session)`.
 - Another area's service code can be imported (`internal/features/trading` may import
   `internal/features/market`), but not edited. Avoid import cycles.
+
+## Handing over to another area
+
+The legacy servlet chains pages (register -> login -> home). Do the same through the registry, never by
+importing a sibling's handler:
+
+```go
+app.Forward(w, r, session, "home", map[string]string{"results": "Ready to Trade"})
+```
+
+The target reads `web.Attr(r, "results")`, or `web.Param(r, "uid")` for a value that overrides a form
+parameter. The fixed contracts are listed on `App.Forward` in `internal/web/forward.go`. A forward to an
+action that no branch has registered yet shows the welcome page, so every branch compiles and runs alone.
