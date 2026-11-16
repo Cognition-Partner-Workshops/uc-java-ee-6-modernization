@@ -1,0 +1,70 @@
+{{/* portfolio.jsp */}}
+{{define "trading_portfolio"}}{{template "pageStart" .Page}}
+<TABLE width="645">
+	<TBODY>
+		<TR>
+			<TD valign="top" width="643">
+			<TABLE width="100%">
+				<TBODY>
+					<TR>
+						<TD colspan="5" bgcolor="#cccccc"><B>Portfolio </B></TD>
+						<TD bgcolor="#cccccc" align="right"><B>Number of Holdings: </B>{{len .Holdings}}</TD>
+					</TR>
+					<TR align="center">
+						<TD colspan="6">
+						<CENTER></CENTER>
+						<TABLE border="1" style="font-size: smaller">
+							<CAPTION align="bottom"><B>Portfolio </B></CAPTION>
+							<TBODY>
+								<TR align="center">
+									<TD><A href="docs/glossary.html">holding ID</A></TD>
+									<TD><A href="docs/glossary.html">purchase date</A></TD>
+									<TD><A href="docs/glossary.html">symbol</A></TD>
+									<TD><A href="docs/glossary.html">quantity</A></TD>
+									<TD><A href="docs/glossary.html">purchase price</A></TD>
+									<TD><A href="docs/glossary.html">current price</A></TD>
+									<TD><A href="docs/glossary.html">purchase basis</A></TD>
+									<TD><A href="docs/glossary.html">market value</A></TD>
+									<TD><A href="docs/glossary.html">gain/(loss)</A></TD>
+									<TD><B><A href="docs/glossary.html">trade</A></B></TD>
+								</TR>
+								{{range .Holdings}}
+								<TR bgcolor="#fafcb6" align="center">
+									<TD>{{.Holding.HoldingID}}</TD>
+									<TD>{{date .Holding.PurchaseDate}}</TD>
+									<TD>{{quoteLink .Holding.QuoteID}}</TD>
+									<TD>{{double .Holding.Quantity}}</TD>
+									<TD>{{money .Holding.PurchasePrice}}</TD>
+									<TD>{{.CurrentPrice}}</TD>
+									<TD>{{.Basis}}</TD>
+									<TD>{{.MarketValue}}</TD>
+									<TD>{{.Gain}}</TD>
+									<TD><B><A href="app?action=sell&amp;holdingID={{.Holding.HoldingID}}">sell</A></B></TD>
+								</TR>
+								{{end}}
+								<TR align="center">
+									<TD></TD>
+									<TD></TD>
+									<TD></TD>
+									<TD></TD>
+									<TD></TD>
+									<TD><B>Total</B></TD>
+									<TD align="center">$ {{.TotalBasis}}</TD>
+									<TD align="center">$ {{.TotalValue}}</TD>
+									<TD align="center" colspan="2">$ {{.TotalGain}} {{.GainPercent}}</TD>
+								</TR>
+							</TBODY>
+						</TABLE>
+						<CENTER></CENTER>
+						</TD>
+					</TR>
+					<TR>
+						<TD colspan="6"></TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+{{template "pageEnd" .Page}}{{end}}
